@@ -7,7 +7,7 @@ from aquacrop.utils import prepare_weather, get_filepath
 from firebase_admin import credentials, db
 from datetime import datetime
 
-cred = credentials.Certificate(r"K:\b\omar\study\grad-bba94-firebase-adminsdk-u9hz8-2c95f70edd.json")
+cred = credentials.Certificate(r"K:\b\omar\study\grad-bba94-firebase-adminsdk-u9hz8-2c95f70edd.json")  # Replace with your actual credential path
 firebase_admin.initialize_app(cred, {
     'databaseURL': 'https://grad-bba94-default-rtdb.firebaseio.com/'  # Replace with your actual database URL
 })
@@ -59,7 +59,7 @@ def write_climate_data(historyFrom, historyTo, temperatureMin, temperatureMax, p
         to_date = datetime.strptime(historyTo, "%m/%d")
         month = from_date.month
         eto_value = get_eto_value(month)
-        file_path = r"C:\Users\yacout\AppData\Local\Programs\Python\Python310\Lib\site-packages\aquacrop\data\alex_climate.txt"
+        file_path = r"C:\Users\yacout\AppData\Local\Programs\Python\Python310\Lib\site-packages\aquacrop\data\alex_climate.txt"  # Replace with your actual aquacrop climate text file path
 
         with open(file_path, "w") as file:
             file.write("Day\tMonth\tYear\tTmin(C)\tTmax(C)\tPrcp(mm)\tEt0(mm)\n")
@@ -76,7 +76,6 @@ def write_climate_data(historyFrom, historyTo, temperatureMin, temperatureMax, p
 # Write the data to the file (only once)
 write_climate_data(historyFrom, historyTo, temperatureMin, temperatureMax, precipitation, Humidity)
 
-# Now import pyplot
 path = get_filepath('alex_climate.txt')
 wdf = prepare_weather(path)
 
@@ -126,7 +125,7 @@ def optimize(num_smts, max_irr_season, num_searches=100, random_seed=None):
     res = fmin(evaluate, x0, disp=0, args=(max_irr_season,))
     smts = np.squeeze(res)
 
-    # Ensure SMT values are within a safe range
+    # Ensure SMT values are within a safe range to avoid permanent wilting point
     min_safe_smt = 50  # Example threshold value
     average_smt = np.mean(smts)
     if average_smt < min_safe_smt:
